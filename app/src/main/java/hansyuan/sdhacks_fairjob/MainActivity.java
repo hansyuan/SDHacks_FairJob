@@ -2,18 +2,34 @@ package hansyuan.sdhacks_fairjob;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.dropbox.chooser.android.DbxChooser;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
+    // A File object containing the path to the transferred files
+    private File mParentPath;
+    // Incoming Intent
+    private Intent mIntent;
+    /*
+     * Called from onNewIntent() for a SINGLE_TOP Activity
+     * or onCreate() for a new Activity. For onNewIntent(),
+     * remember to call setIntent() to store the most
+     * current Intent
+     *
+     */
     NfcAdapter mNfcAdapter;
     private FileUriCallback mFileUriCallback;
 
@@ -87,6 +103,45 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+    /** Get the file **
+     */
+    public String handleContentUri(Uri beamUri) {
+        // Position of the filename in the query Cursor
+        int filenameIndex;
+        // File object for the filename
+        File copiedFile;
+        // The filename stored in MediaStore
+        String fileName;
+        // Test the authority of the URI
+        if (!TextUtils.equals(beamUri.getAuthority(), MediaStore.AUTHORITY)) {
+            return null;
+            // For a MediaStore content URI
+        } else {
+            // Get the column that contains the file name
+            String[] projection = { MediaStore.MediaColumns.DATA };
+            Cursor pathCursor =
+                    getContentResolver().query(beamUri, projection,
+                            null, null, null);
+            // Check for a valid cursor
+            if (pathCursor != null &&
+                    pathCursor.moveToFirst()) {
+                // Get the column index in the Cursor
+                filenameIndex = pathCursor.getColumnIndex(
+                        MediaStore.MediaColumns.DATA);
+                // Get the full file name including path
+                fileName = pathCursor.getString(filenameIndex);
+                // Create a File object for the filename
+                copiedFile = new File(fileName);
+                // Return the parent directory of the file
+                return new File(copiedFile.getParent()).toString();
+            } else {
+                // The query didn't work; return null
+                return null;
+            }
         }
     }
 }
