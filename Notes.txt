@@ -1,0 +1,3 @@
+Working with NFC, it seems like there are major issues with the Nexus 4 and NFC. Not 
+sure whether it's because NFC is not natively supported with the N4 or if this 
+particular N4 is damaged in some way, but the Nexus 5X functions with our app nicely. 
