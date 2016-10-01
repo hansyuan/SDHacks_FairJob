@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private DbxChooser mChooser;
 
     // List of URIs to provide to Android Beam
-    private Uri[] mFileUris = new Uri[10];
+    private Uri[] mFileUris = new Uri[1];
 
     /**
      * Callback that Android Beam file transfer calls to get
