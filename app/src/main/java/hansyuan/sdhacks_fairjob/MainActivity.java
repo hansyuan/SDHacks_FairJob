@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     static final int DBX_CHOOSER_REQUEST = 0;  // You can change this if needed
 
     private Button mChooserButton;
+    private Button PDFChooser;
     private DbxChooser mChooser;
 
     // List of URIs to provide to Android Beam
@@ -84,8 +85,21 @@ public class MainActivity extends AppCompatActivity {
                 mChooser.forResultType(DbxChooser.ResultType.FILE_CONTENT)
                         .launch(MainActivity.this, DBX_CHOOSER_REQUEST);
             }
+        });
 
+        PDFChooser = (Button) findViewById(R.id.render_PDF);
+        PDFChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                // TODO Launch a new activity that renders the passed in PDF.
+
+                // Grab the file from Dropbox.
+
+                // Export the file to the phone.
+
+                // Pass the file to the PDFRenderer.
+            }
         });
     }
 

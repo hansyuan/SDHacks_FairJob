@@ -17,11 +17,22 @@
         android:id="@+id/textView" />
 
     <Button
-        android:text="Button"
+        android:text="Dropbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_marginBottom="102dp"
-        android:id="@+id/chooser_button" />
+        android:id="@+id/chooser_button"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="53dp" />
+
+    <Button
+        android:text="GrabPDF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chooser_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="105dp"
+        android:id="@+id/render_PDF" />
 </RelativeLayout>
