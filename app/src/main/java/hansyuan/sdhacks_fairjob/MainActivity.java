@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the dynamic callback for URI requests.
         mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
 
+        mChooser = new DbxChooser("gfzgo38zc2yxpsv");
 
 
         mChooserButton = (Button) findViewById(R.id.chooser_button);
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == DBX_CHOOSER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 DbxChooser.Result result = new DbxChooser.Result(data);
+                mFileUris[0] = result.getLink();
                 Log.d("main", "Link to selected file: " + result.getLink());
 
                 // Handle the result
