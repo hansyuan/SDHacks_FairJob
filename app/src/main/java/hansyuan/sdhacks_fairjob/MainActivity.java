@@ -1,14 +1,26 @@
 package hansyuan.sdhacks_fairjob;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import com.dropbox.chooser.android.DbxChooser;
 
 public class MainActivity extends AppCompatActivity {
     NfcAdapter mNfcAdapter;
     private FileUriCallback mFileUriCallback;
+
+    static final int DBX_CHOOSER_REQUEST = 0;  // You can change this if needed
+
+    private Button mChooserButton;
+    private DbxChooser mChooser;
 
     // List of URIs to provide to Android Beam
     private Uri[] mFileUris = new Uri[10];
@@ -48,7 +60,31 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        mChooserButton = (Button) findViewById(R.id.chooser_button);
+        mChooserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mChooser.forResultType(DbxChooser.ResultType.FILE_CONTENT)
+                        .launch(MainActivity.this, DBX_CHOOSER_REQUEST);
+            }
 
 
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == DBX_CHOOSER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                DbxChooser.Result result = new DbxChooser.Result(data);
+                Log.d("main", "Link to selected file: " + result.getLink());
+
+                // Handle the result
+            } else {
+                // Failed or was cancelled by the user.
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
